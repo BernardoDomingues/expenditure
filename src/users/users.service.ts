@@ -46,7 +46,7 @@ export class UsersService {
         password,
         createdAt: todayDate,
         updatedAt: todayDate,
-        deletedAt: todayDate,
+        deletedAt: null,
       };
       return this.userRepository.createUser(createUserData);
     }

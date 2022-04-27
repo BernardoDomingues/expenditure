@@ -22,7 +22,7 @@ export class AuthRepository {
         password: '',
         createdAt: new Date(),
         updatedAt: new Date(),
-        deletedAt: new Date(),
+        deletedAt: null,
       },
     };
     await this._collectionRef

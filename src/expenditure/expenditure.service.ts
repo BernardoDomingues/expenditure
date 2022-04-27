@@ -1,5 +1,7 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 
+import { Expenditure } from 'src/entities/expenditure-entity';
+
 import { UsersService } from 'src/users/users.service';
 
 import { ExpenditureRepository } from './expenditure.repository';
@@ -57,10 +59,26 @@ export class ExpenditureService {
       value: expenditureData.value,
       createdAt: todayDate,
       updatedAt: todayDate,
-      deletedAt: todayDate,
+      deletedAt: null,
     };
     return await this.expenditureRepository.createExpenditure(
       createExpenditureData,
     );
+  }
+
+  async listExpenditure(): Promise<Expenditure[] | any> {
+    return await this.expenditureRepository.listExpenditure();
+  }
+
+  async getExpenditure(id: string): Promise<Expenditure | any> {
+    return await this.expenditureRepository.getExpenditure(id);
+  }
+
+  async patchExpenditure(id: string, data): Promise<WriteDataDto> {
+    return await this.expenditureRepository.patchExpenditure(id, data);
+  }
+
+  async deleteExpenditure(id: string): Promise<WriteDataDto> {
+    return await this.expenditureRepository.deleteExpenditure(id);
   }
 }
