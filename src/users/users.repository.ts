@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as firebase from 'firebase-admin';
+import { User } from 'src/entities/user-entity';
 
 import { SaveUserDto } from './dto/save-user.dto';
 import { WriteDataDto } from './dto/write-data.dto';
@@ -28,5 +29,12 @@ export class UserRepository {
 
   async createUser(userData: SaveUserDto): Promise<WriteDataDto> {
     return this._collectionRef.doc().set(userData);
+  }
+
+  async getUserById(id: string): Promise<User | any> {
+    return await this._collectionRef
+      .doc(id)
+      .get()
+      .then((querySnapshot) => querySnapshot.data());
   }
 }

@@ -15,7 +15,7 @@ export class AuthController {
   @Post()
   @ApiTags('Auth')
   @ApiOperation({ summary: 'Login' })
-  async createUser(
+  async login(
     @Body(ValidationPipe) loginData: AuthValidations,
   ): Promise<ReturnLoginDto> {
     const token = await this.authService.login(loginData);

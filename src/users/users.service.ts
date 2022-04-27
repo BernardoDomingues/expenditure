@@ -11,6 +11,7 @@ import { UserRepository } from './users.repository';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { SaveUserDto } from './dto/save-user.dto';
+import { User } from 'src/entities/user-entity';
 
 @Injectable()
 export class UsersService {
@@ -49,5 +50,9 @@ export class UsersService {
       };
       return this.userRepository.createUser(createUserData);
     }
+  }
+
+  async getUserById(id: string): Promise<User> {
+    return await this.userRepository.getUserById(id);
   }
 }
