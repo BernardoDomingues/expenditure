@@ -36,12 +36,16 @@ export class UsersService {
       throw new ConflictException('Email já cadastrado');
     } else {
       const password = await this.encryptPassword(userData.password);
+      const todayDate = new Date();
 
       // Objeto que será salvo no banco
       const createUserData: SaveUserDto = {
         name: userData.name,
-        email: userData.email,
+        email: userData.email.toLowerCase(),
         password,
+        createdAt: todayDate,
+        updatedAt: todayDate,
+        deletedAt: todayDate,
       };
       return this.userRepository.createUser(createUserData);
     }
