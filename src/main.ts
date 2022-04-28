@@ -15,7 +15,7 @@ async function bootstrap() {
   app.enableCors(); // Habilita CORS para acesso por fronts
 
   const document = SwaggerModule.createDocument(app, swaggerConfig); // Configura Documentação
-  SwaggerModule.setup('docs', app, document); // Cria Documentação
+  SwaggerModule.setup('', app, document); // Cria Documentação
 
   await app.listen(process.env.PORT);
 }

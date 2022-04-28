@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 import { mailerConfig } from 'src/config/mailer.config';
 
 import { UsersModule } from 'src/users/users.module';
@@ -17,7 +14,7 @@ import { ExpenditureModule } from './expenditure/expenditure.module';
     AuthModule, // Adiciona importação do módulo de autenticação
     ExpenditureModule, // Adiciona importação do módulo de despesas
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
