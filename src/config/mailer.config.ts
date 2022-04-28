@@ -1,4 +1,3 @@
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import {
   ConfigModule,
   ConfigService,
@@ -32,13 +31,6 @@ export default class MailerConfig {
 
     return {
       transport: this.configSMTP(smtpData),
-      template: {
-        dir: __dirname + '/templates/',
-        adapter: new HandlebarsAdapter(),
-        options: {
-          strict: true,
-        },
-      },
     };
   }
 }

@@ -1,4 +1,6 @@
 import { Injectable, ConflictException } from '@nestjs/common';
+import { MailerService } from '@nestjs-modules/mailer';
+import * as dotenv from 'dotenv';
 
 import { Expenditure } from 'src/entities/expenditure-entity';
 
@@ -10,11 +12,14 @@ import { CreateExpenditureDto } from './dto/create-expenditure.dto';
 import { SaveExpenditureDto } from './dto/save-expenditure.dto';
 import { WriteDataDto } from './dto/write-data.dto';
 
+dotenv.config();
+
 @Injectable()
 export class ExpenditureService {
   constructor(
     private usersService: UsersService,
     private expenditureRepository: ExpenditureRepository,
+    private mailerService: MailerService,
   ) {}
 
   async createExpenditure(
@@ -61,9 +66,20 @@ export class ExpenditureService {
       updatedAt: todayDate,
       deletedAt: null,
     };
-    return await this.expenditureRepository.createExpenditure(
+    const save = await this.expenditureRepository.createExpenditure(
       createExpenditureData,
     );
+
+    // Configura e-mail de confirmação do cadastro de despesa
+    const mail = {
+      to: userData.email,
+      from: process.env.DEFAULT_MAIL,
+      subject: 'Expenditure API - Confirmação de Cadastro',
+      text: 'Despesa cadastrada com sucesso',
+    };
+    await this.mailerService.sendMail(mail);
+
+    return save;
   }
 
   async listExpenditure(): Promise<Expenditure[] | any> {
