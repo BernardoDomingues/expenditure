@@ -7,8 +7,15 @@ import {
   Param,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiUnauthorizedResponse,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Expenditure } from 'src/entities/expenditure-entity';
 
 import { ExpenditureService } from './expenditure.service';
@@ -24,6 +31,9 @@ export class ExpenditureController {
   constructor(private expenditureService: ExpenditureService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiUnauthorizedResponse()
+  @ApiBearerAuth('access-token')
   @ApiTags('Expenditure')
   @ApiOperation({ summary: 'Cadastro de Despesa' })
   async createExpenditure(
@@ -39,6 +49,9 @@ export class ExpenditureController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiUnauthorizedResponse()
+  @ApiBearerAuth('access-token')
   @ApiTags('Expenditure')
   @ApiOperation({ summary: 'Lista de Despesa' })
   async listExpenditure(): Promise<Expenditure[]> {
@@ -46,6 +59,9 @@ export class ExpenditureController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiUnauthorizedResponse()
+  @ApiBearerAuth('access-token')
   @ApiTags('Expenditure')
   @ApiOperation({ summary: 'Busca de Despesa' })
   async getExpenditure(@Param('id') id: string): Promise<Expenditure> {
@@ -53,6 +69,9 @@ export class ExpenditureController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiUnauthorizedResponse()
+  @ApiBearerAuth('access-token')
   @ApiTags('Expenditure')
   @ApiOperation({ summary: 'Atualiza Despesa' })
   async patchExpenditure(
@@ -67,6 +86,9 @@ export class ExpenditureController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiUnauthorizedResponse()
+  @ApiBearerAuth('access-token')
   @ApiTags('Expenditure')
   @ApiOperation({ summary: 'Deleta Despesa' })
   async deleteExpenditure(

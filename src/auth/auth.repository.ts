@@ -32,7 +32,7 @@ export class AuthRepository {
         querySnapshot.forEach((doc) => {
           const userData = doc.data();
           if (userData) {
-            data = { status: true, userData };
+            data = { status: true, userData: { id: doc.id, ...userData } };
           }
         }),
       );
